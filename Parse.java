@@ -18,6 +18,37 @@ public class Parse {
   }
 
   // string to double
+  public static double stringToDouble(String str) {
+    int index = 0;
+    double out = 0;
+    int sign = 1;
+    boolean pastDecimal = false;
+    double place = 1;
+    int digit;
+    // check for negative sign
+    if (str.charAt(index) == '-') {
+      sign = -1;
+      index++;
+    }
+    while (index < str.length()) {
+      if (str.charAt(index) == '.') {
+        pastDecimal = true;
+      } else {
+        if (pastDecimal) {
+          place /= 10;
+        } else {
+          out *= 10;
+        }
+        try {
+          digit = charToDigit(str.charAt(index));
+        } catch (Exception e) {
+          throw new IllegalArgumentException("String failed to covert to double");
+        }
+        out += digit * place;
+      }
+      index ++;
+    }
+    return out * sign;
     // get inegerpart until decimal or end
     // if decimal stop int start decimal till end
   }
