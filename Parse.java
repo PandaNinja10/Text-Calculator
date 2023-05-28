@@ -1,4 +1,19 @@
-public class Parse {
+
+
+public class Parse<T> {
+
+  T object;
+  String residual;
+  public Parse(T object, String residual){
+    this.object = object;
+    this.residual = residual;
+  }
+  public T getObject() {
+    return object;
+  }
+  public String getResidual() {
+    return residual;
+  }
   
   // stuff for number conversion
   // 
