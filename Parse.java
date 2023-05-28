@@ -73,4 +73,46 @@ public class Parse<T> {
     // if decimal stop int start decimal till end
   }
 
+  public static Parse<Double> parseAddSubtract(String str) {
+    Parse<Double> p1, p2;
+    p1 = parseMultiplyDivide(str);
+    if (!p1.isParsed()) return p1;
+    if (p1.noResidual()) return p1;
+    while (!p1.noResidual() && (p1.getResidual().charAt(0) == '+' || p1.getResidual().charAt(0) == '-' )) {
+      p2 = parseMultiplyDivide(p1.getResidual().substring(1));
+      if (!p2.isParsed()) return p1;
+      if (p1.getResidual().charAt(0) == '+') {
+        p1 = new Parse<Double>(p1.getObject() + p2.getObject(), p2.getResidual());
+      } else if (p1.getResidual().charAt(0) == '-') {
+        p1 = new Parse<Double>(p1.getObject() / p2.getObject(), p2.getResidual());
+      }
+    }
+    return p1;
+  }
+  public static Parse<Double> parseMultiplyDivide(String str) {
+    Parse<Double> p1, p2;
+    p1 = parseBracket(str);
+    if (!p1.isParsed()) return p1;
+    if (p1.noResidual()) return p1;
+    while (!p1.noResidual() && (p1.getResidual().charAt(0) == '*' || p1.getResidual().charAt(0) == '/')) {
+      p2 = parseBracket(p1.getResidual().substring(1));
+      if (!p2.isParsed()) return p1;
+      if (p1.getResidual().charAt(0) == '*') {
+        p1 = new Parse<Double>(p1.getObject() * p2.getObject(), p2.getResidual());
+      } else if (p1.getResidual().charAt(0) == '/') {
+        p1 = new Parse<Double>(p1.getObject() / p2.getObject(), p2.getResidual());
+      }
+    }
+    return p1;
+  }
+  public static Parse<Double> parseBracket(String str) {
+    Parse<Double> p1;
+    // (X)
+    if (str.charAt(0) == '(') {
+      p1 = parseAddSubtract(str.substring(1));
+      if (p1.isParsed() && p1.getResidual().charAt(0) == ')') 
+        return new Parse<Double>(p1.getObject(), p1.getResidual().substring(1));
+    }
+    return stringToDouble(str);
+  }
 }
