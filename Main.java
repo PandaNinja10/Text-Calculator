@@ -1,7 +1,12 @@
 public class Main {
   public static void main(String[] args) {
     System.out.println("Start");
-    System.out.println(Parse.stringToDouble("-24.453"));
+
+    String input = "4/-2";
+    Parse<Double> parse = Parse.parseAddSubtract(input);
+    System.out.println(parse.getObject());
+    System.out.println(parse.getResidual());
+    
     System.out.println("Finish");
   }
 }

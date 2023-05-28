@@ -1,7 +1,7 @@
 public class Parse<T> {
 
-  T object;
-  String residual;
+  private T object;
+  private String residual;
   public Parse(T object, String residual){
     this.object = object;
     this.residual = residual;
@@ -12,10 +12,13 @@ public class Parse<T> {
   public String getResidual() {
     return residual;
   }
-  public boolean hasResidual() {
+  public boolean noResidual() {
     return residual.equals("");
   }
-  
+  public boolean isParsed(){
+    return object != null;
+  }
+
   // stuff for number conversion
   // 
   // char to digit
@@ -47,25 +50,26 @@ public class Parse<T> {
       index++;
     }
     while (index < str.length()) {
-      if (str.charAt(index) == '.') {
+      if (str.charAt(index) == '.' && !pastDecimal) {
         pastDecimal = true;
       } else {
+        try {
+          digit = charToDigit(str.charAt(index));
+        } catch (Exception e) {
+          return new Parse<Double>(out * sign, str.substring(index));
+          //throw new IllegalArgumentException("String failed to covert to double");
+        }
         if (pastDecimal) {
           place /= 10;
         } else {
           out *= 10;
-        }
-        try {
-          digit = charToDigit(str.charAt(index));
-        } catch (Exception e) {
-          throw new IllegalArgumentException("String failed to covert to double");
         }
         out += digit * place;
       }
       index ++;
     }
     return new Parse<Double>(out * sign, str.substring(index));
-    // get inegerpart until decimal or end
+    // get ineger part until decimal or end
     // if decimal stop int start decimal till end
   }
 
