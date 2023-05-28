@@ -19,8 +19,6 @@ public class Parse<T> {
     return object != null;
   }
 
-  // stuff for number conversion
-  // 
   // char to digit
   public static int charToDigit(char ch){
     if (ch == '0') return 0;
