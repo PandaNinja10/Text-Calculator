@@ -1,5 +1,3 @@
-
-
 public class Parse<T> {
 
   T object;
@@ -13,6 +11,9 @@ public class Parse<T> {
   }
   public String getResidual() {
     return residual;
+  }
+  public boolean hasResidual() {
+    return residual.equals("");
   }
   
   // stuff for number conversion
@@ -33,7 +34,7 @@ public class Parse<T> {
   }
 
   // string to double
-  public static double stringToDouble(String str) {
+  public static Parse<Double> stringToDouble(String str) {
     int index = 0;
     double out = 0;
     int sign = 1;
@@ -63,8 +64,9 @@ public class Parse<T> {
       }
       index ++;
     }
-    return out * sign;
+    return new Parse<Double>(out * sign, str.substring(index));
     // get inegerpart until decimal or end
     // if decimal stop int start decimal till end
   }
+
 }
