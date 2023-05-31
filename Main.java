@@ -3,7 +3,7 @@ public class Main {
     System.out.println("Start");
     while (true) {
       String input = MenuUtil.getLine();
-      Parse<Double> parse = Parse.stringToDouble(input);
+      Parse<Double> parse = Parse.parseAddSubtract(input);
       System.out.println("Out: " + parse.getObject());
       System.out.println("Resid: " + parse.getResidual());
     }
