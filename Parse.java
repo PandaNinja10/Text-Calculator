@@ -38,15 +38,10 @@ public class Parse<T> {
   public static Parse<Double> stringToDouble(String str) {
     int index = 0;
     double out = 0;
-    int sign = 1;
-    boolean pastDecimal = false;
+    boolean pastDecimal = false, digitFound = false;
     double place = 1;
     int digit;
     // check for negative sign
-    if (str.charAt(index) == '-') {
-      sign = -1;
-      index++;
-    }
     while (index < str.length()) {
       if (str.charAt(index) == '.' && !pastDecimal) {
         pastDecimal = true;
@@ -54,9 +49,11 @@ public class Parse<T> {
         try {
           digit = charToDigit(str.charAt(index));
         } catch (Exception e) {
-          return new Parse<Double>(out * sign, str.substring(index));
+          if (digitFound) return new Parse<Double>(out, str.substring(index));
+          return new Parse<Double>(null, str);
           //throw new IllegalArgumentException("String failed to covert to double");
         }
+        digitFound = true;
         if (pastDecimal) {
           place /= 10;
         } else {
@@ -66,7 +63,7 @@ public class Parse<T> {
       }
       index ++;
     }
-    return new Parse<Double>(out * sign, str.substring(index));
+    return new Parse<Double>(out, str.substring(index));
     // get ineger part until decimal or end
     // if decimal stop int start decimal till end
   }
