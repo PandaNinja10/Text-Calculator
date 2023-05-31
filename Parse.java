@@ -103,6 +103,10 @@ public class Parse<T> {
   public static Parse<Double> parseBracket(String str) {
     Parse<Double> p1;
     // (X)
+    if (str.charAt(0) == '-') {
+      p1 = parseAddSubtract(str.substring(1));
+      if (p1.isParsed()) return new Parse<Double>(-p1.getObject(), p1.getResidual());
+    }
     if (str.charAt(0) == '(') {
       p1 = parseAddSubtract(str.substring(1));
       if (p1.isParsed() && p1.getResidual().charAt(0) == ')') 
