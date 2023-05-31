@@ -4,8 +4,8 @@ public class Main {
     while (true) {
       String input = MenuUtil.getLine();
       Parse<Double> parse = Parse.stringToDouble(input);
-      System.out.println(parse.getObject());
-      System.out.println(parse.getResidual());
+      System.out.println("Out: " + parse.getObject());
+      System.out.println("Resid: " + parse.getResidual());
     }
     // System.out.println("Finish");
   }
