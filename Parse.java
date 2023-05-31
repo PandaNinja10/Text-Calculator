@@ -82,7 +82,7 @@ public class Parse<T> {
       if (p1.getResidual().charAt(0) == '+') {
         p1 = new Parse<Double>(p1.getObject() + p2.getObject(), p2.getResidual());
       } else if (p1.getResidual().charAt(0) == '-') {
-        p1 = new Parse<Double>(p1.getObject() / p2.getObject(), p2.getResidual());
+        p1 = new Parse<Double>(p1.getObject() - p2.getObject(), p2.getResidual());
       }
     }
     return p1;
